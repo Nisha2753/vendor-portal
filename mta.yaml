@@ -1,0 +1,15 @@
+_schema-version: "3.2"
+ID: vendor-portal-with-ai
+version: 1.0.0
+modules:
+  - name: vendor-portal-with-ai-app
+    type: html5
+    path: .
+    build-parameters:
+      builder: custom
+      build-result: dist
+      commands:
+        - npm install
+        - npm run build
+      supported-platforms: []
+resources: []
