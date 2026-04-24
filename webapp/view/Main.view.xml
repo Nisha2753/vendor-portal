@@ -1,0 +1,116 @@
+<mvc:View
+  controllerName="vendorportal.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m">
+
+  <App id="mainApp">
+
+    <!-- HOME -->
+    <Page id="homePage" showHeader="false" enableScrolling="true" class="innerPage">
+      <content>
+        <VBox class="heroWrap" alignItems="Center" justifyContent="Center">
+
+          <Text text="⬡ Orane" class="brandText"/>
+          <Text text="Vendor Management Platform" class="topBadge"/>
+
+          <Title text="Register on" class="heroTitle"/>
+          <Title text="Orane" class="heroTitle heroBlue"/>
+          <Title text="Vendor Portal" class="heroTitle"/>
+
+          <Text
+            text="Streamlined vendor onboarding with live SAP OData integration and AI-powered assistance."
+            class="heroSub"/>
+
+          <HBox class="cardRow">
+
+            <VBox class="featureCard">
+              <Text text="📋" class="cardIcon"/>
+              <Title text="Vendor Onboarding" class="cardTitle"/>
+              <Text
+                text="Register a new vendor with compliance scoring and structured business details."
+                class="cardDesc"/>
+              <Button
+                text="Open"
+                type="Emphasized"
+                press="onOpenOnboard"
+                class="cardBtn"/>
+            </VBox>
+
+            <VBox class="featureCard">
+              <Text text="🤖" class="cardIcon"/>
+              <Title text="AI Assistant" class="cardTitle"/>
+              <Text
+                text="Ask vendor-related questions through text or voice with quick smart responses."
+                class="cardDesc"/>
+              <Button
+                text="Open"
+                press="onOpenAI"
+                class="cardBtn"/>
+            </VBox>
+
+            <VBox class="featureCard">
+              <Text text="📡" class="cardIcon"/>
+              <Title text="Vendor List" class="cardTitle"/>
+              <Text
+                text="Fetch vendor master data from SAP OData service and display mapped details."
+                class="cardDesc"/>
+              <Button
+                text="Open"
+                press="onLoadVendors"
+                class="cardBtn"/>
+            </VBox>
+
+          </HBox>
+        </VBox>
+      </content>
+    </Page>
+
+    <!-- ONBOARD -->
+    <Page id="onboardPage"
+          title="Vendor Registration"
+          showNavButton="true"
+          navButtonPress="onBack"
+          class="innerPage">
+      <content>
+        <VBox class="sapUiLargeMargin formWrap">
+          <Input id="name" placeholder="Vendor Name" class="formInput"/>
+          <Input id="email" placeholder="Email" class="formInput"/>
+          <Input id="phone" placeholder="Phone" class="formInput"/>
+          <Input id="gst" placeholder="GST" class="formInput"/>
+          <Input id="pan" placeholder="PAN" class="formInput"/>
+          <Input id="company" placeholder="Company Code" class="formInput"/>
+          <Input id="address" placeholder="Address" class="formInput"/>
+          <Button text="Register Vendor" type="Emphasized" press="onRegister"/>
+        </VBox>
+      </content>
+    </Page>
+
+    <!-- AI -->
+    <Page id="aiPage"
+          title="Ask AI"
+          showNavButton="true"
+          navButtonPress="onBack"
+          class="innerPage">
+      <content>
+        <VBox class="sapUiLargeMargin formWrap">
+          <Input id="aiInput" placeholder="Ask anything..." class="formInput"/>
+          <Button text="🎤 Speak" press="onSpeak" class="sapUiSmallMarginBottom"/>
+          <Button text="Ask AI" type="Emphasized" press="onAsk"/>
+        </VBox>
+      </content>
+    </Page>
+
+    <!-- LIST -->
+    <Page id="listPage"
+          title="Vendor List"
+          showNavButton="true"
+          navButtonPress="onBack"
+          class="innerPage">
+      <content>
+        <List id="vendorList" headerText="Fetched Vendors"/>
+      </content>
+    </Page>
+
+  </App>
+
+</mvc:View>

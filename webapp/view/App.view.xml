@@ -1,0 +1,12 @@
+<mvc:View
+  controllerName="vendorportal.controller.App"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m">
+
+  <App id="app">
+    <pages>
+      <mvc:XMLView viewName="vendorportal.view.Main"/>
+    </pages>
+  </App>
+
+</mvc:View>
