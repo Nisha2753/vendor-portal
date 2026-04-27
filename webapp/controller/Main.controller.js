@@ -3,9 +3,9 @@ sap.ui.define([
   "sap/m/MessageToast",
   "sap/m/CustomListItem",
   "sap/m/VBox",
-  "sap/m/ObjectIdentifier",
+  "sap/m/HBox",
   "sap/m/Text"
-], function (Controller, MessageToast, CustomListItem, VBox, ObjectIdentifier, Text) {
+], function (Controller, MessageToast, CustomListItem, VBox, HBox, Text) {
   "use strict";
 
   return Controller.extend("vendorportal.controller.Main", {
@@ -23,41 +23,26 @@ sap.ui.define([
     },
 
     onRegister: function () {
-      var data = {
-        VENDOR_NAME: this.byId("name").getValue(),
-        EMAIL: this.byId("email").getValue(),
-        PHONE_NUMBER: this.byId("phone").getValue(),
-        GST_NUMBER: this.byId("gst").getValue(),
-        PAN_NUMBER: this.byId("pan").getValue(),
-        COMPANY_CODE: this.byId("company").getValue(),
-        ADDRESS: this.byId("address").getValue()
-      };
+      var email = this.byId("email").getValue();
+      var gst = this.byId("gst").getValue();
+      var pan = this.byId("pan").getValue();
 
       var score = 0;
+      if (gst) score += 40;
+      if (pan) score += 30;
+      if (email && email.includes("@")) score += 30;
 
-      if (data.GST_NUMBER) {
-        score += 40;
-      }
-      if (data.PAN_NUMBER) {
-        score += 30;
-      }
-      if (data.EMAIL && data.EMAIL.includes("@")) {
-        score += 30;
-      }
-
-      MessageToast.show("Score: " + score + " (Demo)");
-      console.log("Onboarding Data:", data);
+      MessageToast.show("Vendor Score: " + score + " / 100");
     },
 
     onSpeak: function () {
       if ("webkitSpeechRecognition" in window) {
         var rec = new webkitSpeechRecognition();
-        var oInput = this.byId("aiInput");
+        var input = this.byId("aiInput");
 
         rec.start();
-
         rec.onresult = function (e) {
-          oInput.setValue(e.results[0][0].transcript);
+          input.setValue(e.results[0][0].transcript);
         };
       } else {
         MessageToast.show("Voice not supported");
@@ -65,60 +50,144 @@ sap.ui.define([
     },
 
     onAsk: function () {
-      MessageToast.show("🤖 " + this.byId("aiInput").getValue());
+      var q = this.byId("aiInput").getValue();
+      MessageToast.show("AI Response: " + q);
+    },
+
+    /* 🔥 Helper functions */
+
+    _getInitials: function (name) {
+      if (!name) return "V";
+      var parts = name.split(" ");
+      return parts.map(p => p[0]).join("").toUpperCase();
+    },
+
+    _box: function (label, value) {
+      return new VBox({
+        class: "vendorDetailBox",
+        items: [
+          new Text({ text: label, class: "vendorLabel" }),
+          new Text({ text: value || "-", class: "vendorValue" })
+        ]
+      });
+    },
+
+    _addVendorCard: function (v) {
+      var list = this.byId("vendorList");
+      var initials = this._getInitials(v.VendorName);
+
+      list.addItem(new CustomListItem({
+        content: new VBox({
+          class: "vendorCard",
+          items: [
+
+            new HBox({
+              class: "vendorHeader",
+              justifyContent: "SpaceBetween",
+              alignItems: "Center",
+              items: [
+                new HBox({
+                  alignItems: "Center",
+                  items: [
+                    new Text({
+                      text: initials,
+                      class: "vendorAvatar"
+                    }),
+                    new VBox({
+                      items: [
+                        new Text({
+                          text: v.VendorName || "No Name",
+                          class: "vendorName"
+                        }),
+                        new Text({
+                          text: "Vendor ID: " + (v.VendorId || "-") + " • " + (v.Email || "-"),
+                          class: "vendorMeta"
+                        })
+                      ]
+                    })
+                  ]
+                }),
+
+                new Text({
+                  text: "Status: " + (v.Status || "Demo"),
+                  class: "vendorChip"
+                })
+              ]
+            }),
+
+            new VBox({
+              class: "vendorDetailsGrid",
+              items: [
+                this._box("Phone", v.PhoneNumber),
+                this._box("GST Number", v.GstNumber),
+                this._box("PAN Number", v.PanNumber),
+                this._box("Company Code", v.CompanyCode),
+                this._box("Address", v.Address)
+              ]
+            })
+
+          ]
+        })
+      }));
     },
 
     onLoadVendors: function () {
-      var oList = this.byId("vendorList");
-      oList.removeAllItems();
+      var list = this.byId("vendorList");
+      var that = this;
 
+      list.removeAllItems();
       this.byId("mainApp").to(this.byId("listPage"));
 
       fetch("https://npsap01.namdhariseeds.com:44310/sap/opu/odata/sap/ZVENDOR_ODATA_SRV/VendorSet?$format=json")
         .then(function (res) {
-          console.log("HTTP Status:", res.status);
-          return res.text();
+          return res.json();
         })
-        .then(function (text) {
-          console.log("RAW RESPONSE:", text);
-
-          var data = JSON.parse(text);
-          console.log("PARSED DATA:", data);
-
+        .then(function (data) {
           var results = (data.d && data.d.results) ? data.d.results : [];
-          console.log("RESULTS:", results);
 
           if (!results.length) {
-            MessageToast.show("No data found from OData");
+            MessageToast.show("No OData records found");
             return;
           }
 
           results.forEach(function (v) {
-            oList.addItem(new CustomListItem({
-              content: new VBox({
-                class: "sapUiSmallMargin sapUiSmallMarginBottom",
-                items: [
-                  new ObjectIdentifier({
-                    title: v.VendorName || "No Name",
-                    text: "Vendor ID: " + (v.VendorId || "")
-                  }),
-                  new Text({ text: "Email: " + (v.Email || "") }),
-                  new Text({ text: "Phone: " + (v.PhoneNumber || "") }),
-                  new Text({ text: "GST: " + (v.GstNumber || "") }),
-                  new Text({ text: "PAN: " + (v.PanNumber || "") }),
-                  new Text({ text: "Company Code: " + (v.CompanyCode || "") }),
-                  new Text({ text: "Address: " + (v.Address || "") }),
-                  new Text({ text: "Status: " + (v.Status || "") })
-                ]
-              })
-            }));
+            that._addVendorCard(v);
           });
 
-          MessageToast.show("✅ Real OData loaded");
+          MessageToast.show("Real OData loaded");
         })
-        .catch(function (err) {
-          console.log("OData fetch failed:", err);
-          MessageToast.show("❌ OData failed - check console");
+        .catch(function () {
+
+          var demoData = [
+            {
+              VendorId: "1",
+              VendorName: "Harsh Singh",
+              Email: "harshsinghop3@gmail.com",
+              PhoneNumber: "9999999999",
+              GstNumber: "123456789098765",
+              PanNumber: "PV1234AB",
+              CompanyCode: "100",
+              Address: "Noida",
+              Status: "A"
+            },
+            {
+              VendorId: "2",
+              VendorName: "Himanshu Singh",
+              Email: "himanshusingh@gmail.com",
+              PhoneNumber: "8888899999",
+              GstNumber: "123456789098765",
+              PanNumber: "PV1234AB",
+              CompanyCode: "100",
+              Address: "Delhi",
+              Status: "A"
+            }
+          ];
+
+          demoData.forEach(function (v) {
+            that._addVendorCard(v);
+          });
+
+          MessageToast.show("OData blocked, showing demo data");
         });
     }
 
