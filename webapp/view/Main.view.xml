@@ -5,59 +5,135 @@
 
   <App id="mainApp">
 
-    <!-- HOME -->
-    <Page id="homePage" showHeader="false" enableScrolling="true" class="innerPage">
+    <!-- HOME PAGE -->
+    <Page id="homePage" showHeader="false" enableScrolling="true">
       <content>
-        <VBox class="heroWrap" alignItems="Center" justifyContent="Center">
+        <VBox class="shellBg">
+          <VBox class="heroBox">
 
-          <Text text="⬡ Orane" class="brandText"/>
-          <Text text="Vendor Management Platform" class="topBadge"/>
+            <HBox class="brandBar" justifyContent="SpaceBetween" alignItems="Center">
+              <Text text="⬡ Orane" class="brandLogo"/>
+              <Text text="● SAP BTP Connected" class="statusPill"/>
+            </HBox>
 
-          <Title text="Register on" class="heroTitle"/>
-          <Title text="Orane" class="heroTitle heroBlue"/>
-          <Title text="Vendor Portal" class="heroTitle"/>
+            <HBox class="heroGrid">
+              <VBox class="heroLeft">
+                <Text text="Vendor Intelligence Platform" class="badge"/>
+                <Title text="Smarter Vendor" class="heroTitle"/>
+                <Title text="Onboarding" class="heroTitle gradientText"/>
+                <Title text="for SAP Teams" class="heroTitle"/>
 
-          <Text
-            text="Streamlined vendor onboarding with live SAP OData integration and AI-powered assistance."
-            class="heroSub"/>
+                <Text
+                  text="A premium SAP BTP vendor portal with onboarding score, AI assistant, voice input, and OData-ready vendor master display."
+                  class="heroSub"/>
 
-          <HBox class="cardRow">
+                <HBox class="metricRow">
+                  <VBox class="metricCard">
+                    <Text text="AI" class="metricNum"/>
+                    <Text text="Scoring" class="metricLabel"/>
+                  </VBox>
 
-            <VBox class="featureCard">
-              <Text text="📋" class="cardIcon"/>
-              <Title text="Vendor Onboarding" class="cardTitle"/>
+                  <VBox class="metricCard">
+                    <Text text="OData" class="metricNum"/>
+                    <Text text="Integration" class="metricLabel"/>
+                  </VBox>
+
+                  <VBox class="metricCard">
+                    <Text text="UI5" class="metricNum"/>
+                    <Text text="Fiori App" class="metricLabel"/>
+                  </VBox>
+                </HBox>
+              </VBox>
+
+              <VBox class="heroRight glassPanel">
+
+                <VBox class="actionCard">
+                  <Text text="📋" class="actionIcon"/>
+                  <Title text="Vendor Onboarding" class="actionTitle"/>
+                  <Text text="Capture vendor details and calculate compliance score instantly." class="actionDesc"/>
+                  <Button text="Start Registration" type="Emphasized" press="onOpenOnboard" class="fullBtn"/>
+                </VBox>
+
+                <VBox class="actionCard">
+                  <Text text="🤖" class="actionIcon"/>
+                  <Title text="AI Assistant" class="actionTitle"/>
+                  <Text text="Ask vendor-related queries with text or voice assistance." class="actionDesc"/>
+                  <Button text="Open AI Assistant" press="onOpenAI" class="fullBtn"/>
+                </VBox>
+
+                <VBox class="actionCard">
+                  <Text text="📡" class="actionIcon"/>
+                  <Title text="Vendor Master Data" class="actionTitle"/>
+                  <Text text="View mapped vendor data from SAP OData service." class="actionDesc"/>
+                  <Button text="View Vendor List" press="onLoadVendors" class="fullBtn"/>
+                </VBox>
+
+              </VBox>
+            </HBox>
+
+          </VBox>
+        </VBox>
+      </content>
+    </Page>
+
+    <!-- ADVANCED VENDOR REGISTRATION PAGE -->
+    <Page id="onboardPage" title="Vendor Registration" showNavButton="true" navButtonPress="onBack">
+      <content>
+        <VBox class="shellBg">
+          <HBox class="formLayout">
+
+            <VBox class="leftInfoCard">
+              <Text text="Step 01 • Smart Onboarding" class="stepPill"/>
+
+              <Title text="Vendor Compliance Check" class="pageTitle"/>
+
               <Text
-                text="Register a new vendor with compliance scoring and structured business details."
-                class="cardDesc"/>
+                text="This module calculates a vendor onboarding score using GST, PAN, and Email validation."
+                class="pageSub"/>
+
+              <VBox class="featureLine">
+                <Text text="✅ GST Number Validation" class="actionTitle"/>
+                <Text text="Adds 40 score points when GST number is available." class="actionDesc"/>
+              </VBox>
+
+              <VBox class="featureLine">
+                <Text text="✅ PAN Number Check" class="actionTitle"/>
+                <Text text="Adds 30 score points when PAN number is provided." class="actionDesc"/>
+              </VBox>
+
+              <VBox class="featureLine">
+                <Text text="✅ Email Verification" class="actionTitle"/>
+                <Text text="Adds 30 score points when email format is valid." class="actionDesc"/>
+              </VBox>
+
+              <VBox class="scoreBox">
+                <Text text="Maximum Vendor Score" class="metricLabel"/>
+                <Text text="100 / 100" class="metricNum"/>
+              </VBox>
+            </VBox>
+
+            <VBox class="rightFormCard">
+              <Text text="Vendor Details" class="badge"/>
+
+              <Title text="Create Vendor Profile" class="pageTitle"/>
+
+              <Text
+                text="Fill vendor master details before submitting for onboarding score."
+                class="pageSub"/>
+
+              <Input id="name" placeholder="Vendor Name" class="formInput"/>
+              <Input id="email" placeholder="Email Address" class="formInput"/>
+              <Input id="phone" placeholder="Phone Number" class="formInput"/>
+              <Input id="gst" placeholder="GST Number" class="formInput"/>
+              <Input id="pan" placeholder="PAN Number" class="formInput"/>
+              <Input id="company" placeholder="Company Code" class="formInput"/>
+              <Input id="address" placeholder="Address" class="formInput"/>
+
               <Button
-                text="Open"
+                text="Calculate Vendor Score"
                 type="Emphasized"
-                press="onOpenOnboard"
-                class="cardBtn"/>
-            </VBox>
-
-            <VBox class="featureCard">
-              <Text text="🤖" class="cardIcon"/>
-              <Title text="AI Assistant" class="cardTitle"/>
-              <Text
-                text="Ask vendor-related questions through text or voice with quick smart responses."
-                class="cardDesc"/>
-              <Button
-                text="Open"
-                press="onOpenAI"
-                class="cardBtn"/>
-            </VBox>
-
-            <VBox class="featureCard">
-              <Text text="📡" class="cardIcon"/>
-              <Title text="Vendor List" class="cardTitle"/>
-              <Text
-                text="Fetch vendor master data from SAP OData service and display mapped details."
-                class="cardDesc"/>
-              <Button
-                text="Open"
-                press="onLoadVendors"
-                class="cardBtn"/>
+                press="onRegister"
+                class="fullBtn"/>
             </VBox>
 
           </HBox>
@@ -65,49 +141,67 @@
       </content>
     </Page>
 
-    <!-- ONBOARD -->
-    <Page id="onboardPage"
-          title="Vendor Registration"
-          showNavButton="true"
-          navButtonPress="onBack"
-          class="innerPage">
+    <!-- ADVANCED AI PAGE -->
+    <Page id="aiPage" title="AI Assistant" showNavButton="true" navButtonPress="onBack">
       <content>
-        <VBox class="sapUiLargeMargin formWrap">
-          <Input id="name" placeholder="Vendor Name" class="formInput"/>
-          <Input id="email" placeholder="Email" class="formInput"/>
-          <Input id="phone" placeholder="Phone" class="formInput"/>
-          <Input id="gst" placeholder="GST" class="formInput"/>
-          <Input id="pan" placeholder="PAN" class="formInput"/>
-          <Input id="company" placeholder="Company Code" class="formInput"/>
-          <Input id="address" placeholder="Address" class="formInput"/>
-          <Button text="Register Vendor" type="Emphasized" press="onRegister"/>
+        <VBox class="shellBg">
+          <VBox class="aiChatBox">
+
+            <Text text="AI Vendor Assistant" class="badge"/>
+
+            <Title text="Ask Smarter Vendor Questions" class="pageTitle"/>
+
+            <Text
+              text="Use text or voice to ask about GST, PAN, onboarding status, approval process, or SAP OData."
+              class="pageSub"/>
+
+            <HBox class="aiSuggestionGrid">
+              <VBox class="aiSuggestion">
+                <Text text="💡 Documents" class="actionTitle"/>
+                <Text text="What documents are required for vendor onboarding?" class="actionDesc"/>
+              </VBox>
+
+              <VBox class="aiSuggestion">
+                <Text text="🧾 GST / PAN" class="actionTitle"/>
+                <Text text="How is GST and PAN validated?" class="actionDesc"/>
+              </VBox>
+
+              <VBox class="aiSuggestion">
+                <Text text="📡 SAP OData" class="actionTitle"/>
+                <Text text="How is vendor data fetched from SAP?" class="actionDesc"/>
+              </VBox>
+            </HBox>
+
+            <Input id="aiInput" placeholder="Type your question here..." class="formInput"/>
+
+            <HBox class="actionRow">
+              <Button text="🎤 Voice Input" press="onSpeak"/>
+              <Button text="Ask AI" type="Emphasized" press="onAsk"/>
+            </HBox>
+
+          </VBox>
         </VBox>
       </content>
     </Page>
 
-    <!-- AI -->
-    <Page id="aiPage"
-          title="Ask AI"
-          showNavButton="true"
-          navButtonPress="onBack"
-          class="innerPage">
+    <!-- ADVANCED VENDOR LIST PAGE -->
+    <Page id="listPage" title="Vendor List" showNavButton="true" navButtonPress="onBack">
       <content>
-        <VBox class="sapUiLargeMargin formWrap">
-          <Input id="aiInput" placeholder="Ask anything..." class="formInput"/>
-          <Button text="🎤 Speak" press="onSpeak" class="sapUiSmallMarginBottom"/>
-          <Button text="Ask AI" type="Emphasized" press="onAsk"/>
-        </VBox>
-      </content>
-    </Page>
+        <VBox class="shellBg">
+          <VBox class="vendorListWrap">
 
-    <!-- LIST -->
-    <Page id="listPage"
-          title="Vendor List"
-          showNavButton="true"
-          navButtonPress="onBack"
-          class="innerPage">
-      <content>
-        <List id="vendorList" headerText="Fetched Vendors"/>
+            <Text text="SAP OData View" class="badge"/>
+
+            <Title text="Vendor Master Records" class="pageTitle"/>
+
+            <Text
+              text="Mapped vendor master data from SAP OData service."
+              class="pageSub"/>
+
+            <List id="vendorList" headerText="Vendor Master Records" class="vendorPremiumList"/>
+
+          </VBox>
+        </VBox>
       </content>
     </Page>
 
