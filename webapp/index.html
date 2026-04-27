@@ -2,124 +2,335 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Vendor Portal</title>
+  <title>Orane Vendor Portal</title>
 
   <style>
     html, body {
       height: 100%;
       margin: 0;
       background:
-        linear-gradient(rgba(21, 34, 63, 0.25) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(21, 34, 63, 0.25) 1px, transparent 1px),
-        linear-gradient(180deg, #050b1a 0%, #08152d 100%);
-      background-size: 40px 40px, 40px 40px, cover;
-      overflow: hidden;
+        radial-gradient(circle at 20% 10%, rgba(0, 168, 255, .25), transparent 30%),
+        radial-gradient(circle at 80% 20%, rgba(122, 92, 255, .22), transparent 32%),
+        linear-gradient(180deg, #050a14 0%, #071426 100%);
     }
 
-    .sapUiBody {
-      background: transparent !important;
+    .sapUiBody { background: transparent !important; }
+
+    .shellBg {
+      min-height: 100%;
+      background:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 42px 42px;
     }
 
-    .heroWrap {
-      max-width: 980px;
+    .heroBox {
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 40px 20px;
+      padding: 52px 28px;
     }
 
-    .brandText {
-      color: #2da8ff !important;
-      font-size: 22px !important;
-      font-weight: 700 !important;
-      text-align: center;
-      margin-bottom: 18px !important;
+    .brandBar {
+      width: 100%;
+      margin-bottom: 42px;
     }
 
-    .topBadge {
-      display: inline-block;
-      padding: 8px 18px;
-      border: 1px solid rgba(45,168,255,0.35);
-      border-radius: 999px;
-      color: #2da8ff !important;
+    .brandLogo {
+      color: #2bbcff !important;
+      font-size: 26px !important;
+      font-weight: 900 !important;
+    }
+
+    .statusPill {
+      padding: 8px 16px;
+      border-radius: 99px;
+      background: rgba(34,197,94,.14);
+      border: 1px solid rgba(34,197,94,.35);
+      color: #7CFFB2 !important;
       font-size: 13px !important;
-      letter-spacing: 1px;
+    }
+
+    .heroGrid { gap: 34px; align-items: center; }
+
+    .heroLeft { width: 58%; }
+    .heroRight { width: 38%; }
+
+    .badge {
+      color: #38bdf8 !important;
+      letter-spacing: 1.6px;
       text-transform: uppercase;
-      background: rgba(20, 38, 73, 0.45);
+      font-size: 13px !important;
+      padding: 8px 18px;
+      border: 1px solid rgba(56,189,248,.35);
+      border-radius: 999px;
+      background: rgba(56,189,248,.08);
+      width: fit-content;
       margin-bottom: 22px !important;
     }
 
     .heroTitle {
-      text-align: center;
-      font-size: 76px !important;
-      line-height: 1.02 !important;
+      color: #f8fbff !important;
+      font-size: 78px !important;
       font-weight: 900 !important;
-      color: #eef3ff !important;
-      margin: 0 !important;
+      line-height: 0.98 !important;
+      letter-spacing: -3px;
     }
 
-    .heroBlue {
-      color: #2da8ff !important;
+    .gradientText {
+      background: linear-gradient(90deg,#38bdf8,#7c3aed,#22d3ee);
+      -webkit-background-clip: text;
+      color: transparent !important;
     }
 
     .heroSub {
-      text-align: center;
-      color: #8da2c9 !important;
+      color: #9fb3d9 !important;
       font-size: 18px !important;
-      line-height: 1.6 !important;
-      max-width: 760px;
-      margin: 22px auto 40px auto !important;
+      line-height: 1.7;
+      max-width: 720px;
+      margin-top: 26px !important;
     }
 
-    .cardRow {
-      gap: 22px;
-      justify-content: center;
-      flex-wrap: wrap;
+    .metricRow { gap: 16px; margin-top: 34px; }
+
+    .metricCard {
+      width: 150px;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
     }
 
-    .featureCard {
-      width: 280px;
-      min-height: 220px;
+    .metricNum {
+      color: #fff !important;
+      font-size: 26px !important;
+      font-weight: 900 !important;
+    }
+
+    .metricLabel {
+      color: #8ea1c4 !important;
+      font-size: 13px !important;
+    }
+
+    .glassPanel {
       padding: 26px;
-      border-radius: 22px;
-      background: rgba(24, 35, 63, 0.92);
-      border: 1px solid rgba(84, 116, 176, 0.28);
-      box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+      border-radius: 28px;
+      background: rgba(18, 29, 52, .78);
+      border: 1px solid rgba(120, 160, 220, .18);
+      box-shadow: 0 24px 80px rgba(0,0,0,.55);
+      backdrop-filter: blur(14px);
     }
 
-    .cardIcon {
-      font-size: 32px;
+    .actionCard {
+      padding: 24px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(37,52,86,.92), rgba(22,33,58,.92));
+      border: 1px solid rgba(120,160,220,.22);
       margin-bottom: 18px;
     }
 
-    .cardTitle {
-      color: #f3f7ff !important;
-      font-size: 20px !important;
-      font-weight: 700 !important;
-      margin-bottom: 10px !important;
+    .actionIcon {
+      font-size: 30px !important;
+      margin-bottom: 12px !important;
     }
 
-    .cardDesc {
-      color: #8ea0c4 !important;
-      font-size: 15px !important;
-      line-height: 1.5 !important;
-      margin-bottom: 20px !important;
+    .actionTitle {
+      color: #fff !important;
+      font-size: 21px !important;
+      font-weight: 800 !important;
     }
 
-    .cardBtn {
-      width: 100%;
+    .actionDesc {
+      color: #9fb3d9 !important;
+      font-size: 14px !important;
+      line-height: 1.5;
+      margin: 8px 0 16px 0 !important;
     }
 
-    .formWrap {
-      max-width: 720px;
-      margin: 0 auto;
+    .fullBtn { width: 100%; border-radius: 14px; }
+
+    .pageTitle {
+      color: #fff !important;
+      font-size: 34px !important;
+      font-weight: 900 !important;
     }
 
-    .formInput {
-      margin-bottom: 12px;
+    .pageSub {
+      color: #9fb3d9 !important;
+      margin-bottom: 24px !important;
     }
 
-    .innerPage {
-      background: linear-gradient(180deg, #08101f 0%, #0d1830 100%) !important;
+    .formInput { margin-bottom: 14px; }
+
+    .vendorListWrap {
+      max-width: 920px;
+      margin: 46px auto;
     }
+
+    /* 🔥 ADVANCED FORM + AI UI */
+
+    .formLayout {
+      display: flex;
+      max-width: 1120px;
+      margin: 70px auto;
+      gap: 28px;
+    }
+
+    .leftInfoCard {
+      width: 36%;
+      padding: 32px;
+      border-radius: 30px;
+      background: linear-gradient(160deg, rgba(14,165,233,.20), rgba(124,58,237,.14), rgba(15,23,42,.92));
+      border: 1px solid rgba(56,189,248,.30);
+      box-shadow: 0 25px 80px rgba(0,0,0,.45);
+    }
+
+    .rightFormCard {
+      width: 64%;
+      padding: 34px;
+      border-radius: 30px;
+      background: rgba(15, 23, 42, .88);
+      border: 1px solid rgba(148,163,184,.22);
+      box-shadow: 0 25px 80px rgba(0,0,0,.45);
+    }
+
+    .stepPill {
+      color: #38bdf8 !important;
+      background: rgba(56,189,248,.12);
+      border: 1px solid rgba(56,189,248,.35);
+      padding: 8px 16px;
+      border-radius: 999px;
+      width: fit-content;
+      margin-bottom: 18px !important;
+    }
+
+    .featureLine {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.08);
+      margin-top: 12px;
+    }
+
+    .scoreBox {
+      margin-top: 22px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(34,197,94,.10);
+      border: 1px solid rgba(34,197,94,.28);
+    }
+
+    .aiChatBox {
+      max-width: 980px;
+      margin: 70px auto;
+      padding: 34px;
+      border-radius: 32px;
+      background: rgba(15,23,42,.88);
+      border: 1px solid rgba(148,163,184,.22);
+      box-shadow: 0 25px 80px rgba(0,0,0,.45);
+    }
+
+    .aiSuggestionGrid {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .aiSuggestion {
+      width: 31%;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(56,189,248,.08);
+      border: 1px solid rgba(56,189,248,.22);
+    }
+
+    .actionRow {
+      display: flex;
+      gap: 14px;
+    }
+    /* 🔥 PREMIUM VENDOR LIST UI */
+
+.vendorListWrap {
+  max-width: 1050px;
+  margin: 46px auto;
+}
+
+.vendorPremiumList {
+  border: none !important;
+  background: transparent !important;
+}
+
+.vendorCard {
+  margin: 18px 0;
+  padding: 24px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(25,39,68,.96), rgba(12,22,41,.96));
+  border: 1px solid rgba(56,189,248,.25);
+  box-shadow: 0 18px 45px rgba(0,0,0,.38);
+}
+
+.vendorHeader {
+  margin-bottom: 18px;
+}
+
+.vendorAvatar {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #0ea5e9, #7c3aed);
+  color: #fff !important;
+  font-size: 22px !important;
+  font-weight: 900 !important;
+  text-align: center;
+  line-height: 58px;
+  margin-right: 18px;
+}
+
+.vendorName {
+  color: #fff !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+}
+
+.vendorMeta {
+  color: #9fb3d9 !important;
+  font-size: 14px !important;
+  margin-top: 4px !important;
+}
+
+.vendorChip {
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(45,168,255,.10);
+  border: 1px solid rgba(45,168,255,.35);
+  color: #38bdf8 !important;
+  font-size: 13px !important;
+}
+
+.vendorDetailsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.vendorDetailBox {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.09);
+}
+
+.vendorLabel {
+  color: #7f93b8 !important;
+  font-size: 12px !important;
+}
+
+.vendorValue {
+  color: #f7fbff !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  margin-top: 4px !important;
+}
   </style>
 
   <script
@@ -138,3 +349,4 @@
   <div data-sap-ui-component data-name="vendorportal"></div>
 </body>
 </html>
+  
