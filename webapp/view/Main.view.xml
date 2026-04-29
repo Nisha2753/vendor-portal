@@ -4,6 +4,27 @@
   xmlns="sap.m">
 
   <App id="mainApp">
+   
+   <Page id="loginPage" showHeader="false" enableScrolling="false">
+  <content>
+    <VBox class="loginBg" alignItems="Center" justifyContent="Center">
+
+      <VBox class="loginCard">
+        <Text text="⬡ Orane" class="loginLogo"/>
+        <Title text="Vendor Portal Login" class="loginTitle"/>
+        <Text text="Secure access for vendor onboarding and SAP OData services." class="loginSub"/>
+
+        <Input id="loginEmail" placeholder="Email ID" value="nishsingh61746@gmail.com" class="formInput"/>
+        <Input id="loginPassword" placeholder="Password" type="Password" class="formInput"/>
+
+        <Button text="Login to Portal" type="Emphasized" press="onLogin" class="fullBtn"/>
+
+        <Text text="Authorized user: nishsingh61746@gmail.com" class="loginHint"/>
+      </VBox>
+
+    </VBox>
+  </content>
+</Page>
 
     <!-- HOME PAGE -->
     <Page id="homePage" showHeader="false" enableScrolling="true">
@@ -76,7 +97,7 @@
       </content>
     </Page>
 
-    <!-- ADVANCED VENDOR REGISTRATION PAGE -->
+    <!-- VENDOR REGISTRATION PAGE -->
     <Page id="onboardPage" title="Vendor Registration" showNavButton="true" navButtonPress="onBack">
       <content>
         <VBox class="shellBg">
@@ -106,10 +127,6 @@
                 <Text text="Adds 30 score points when email format is valid." class="actionDesc"/>
               </VBox>
 
-              <VBox class="scoreBox">
-                <Text text="Maximum Vendor Score" class="metricLabel"/>
-                <Text text="100 / 100" class="metricNum"/>
-              </VBox>
             </VBox>
 
             <VBox class="rightFormCard">
@@ -130,7 +147,7 @@
               <Input id="address" placeholder="Address" class="formInput"/>
 
               <Button
-                text="Calculate Vendor Score"
+                text="Register Vendor"
                 type="Emphasized"
                 press="onRegister"
                 class="fullBtn"/>
@@ -141,7 +158,7 @@
       </content>
     </Page>
 
-    <!-- ADVANCED AI PAGE -->
+    <!-- AI PAGE -->
     <Page id="aiPage" title="AI Assistant" showNavButton="true" navButtonPress="onBack">
       <content>
         <VBox class="shellBg">
@@ -184,7 +201,7 @@
       </content>
     </Page>
 
-    <!-- ADVANCED VENDOR LIST PAGE -->
+    <!-- VENDOR LIST -->
     <Page id="listPage" title="Vendor List" showNavButton="true" navButtonPress="onBack">
       <content>
         <VBox class="shellBg">
