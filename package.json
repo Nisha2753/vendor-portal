@@ -1,13 +1,16 @@
 {
   "name": "vendor-portal-with-ai",
   "version": "1.0.0",
-  "private": true,
-  "description": "Vendor Portal UI5 App",
   "scripts": {
-    "start": "ui5 serve -o index.html",
-    "build": "ui5 build --all"
+    "start": "ui5 serve -o index.html"
   },
   "devDependencies": {
-    "@ui5/cli": "^3.11.0"
+    "@ui5/cli": "^3.0.0",
+    "ui5-middleware-simpleproxy": "^0.6.1"
+  },
+  "ui5": {
+    "dependencies": [
+      "ui5-middleware-simpleproxy"
+    ]
   }
 }
